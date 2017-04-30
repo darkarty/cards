@@ -1,6 +1,6 @@
 //test git commit and push
 
-console.log("hello world");
+//console.log("hello world");
 
 
 function card(name, suit, value){
@@ -53,8 +53,57 @@ function hand(){
 	this.draw = function(deck){
 		this.cards.push(deck.cards.pop());
 	}
+}
+
+
+
+function isValueInArray(value,array){
+	if(array.indexOf(value) > -1){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+function handHighestValue(hand){ //return highest value of a hand
+	handRoyalFlush=false;
+	handStraightFlush=false;
+	handFourOfAKind=false;
+	handFlush=false;
+	handTwoPair=false;
+	handThreeOfAKind=false;
+	handPair=false;
+
+	valueArray=[];
+	suitArray=[];
+	nameArray=[];
+
+	console.log(hand.cards);
+	for(i=0;i<5;i++){
+		valueArray.push(hand.cards[i].value);
+		suitArray.push(hand.cards[i].suit);
+		nameArray.push(hand.cards[i].name);
+	}
+	//console.log(valueArray);
+	//console.log(suitArray);
+	//console.log(nameArray);
+
+	//check for royal flush
+	if(isValueInArray(48,valueArray) && isValueInArray(49,valueArray) && isValueInArray(50,valueArray) && isValueInArray(51,valueArray) && isValueInArray(52,valueArray)){
+		handRoyalFlush=true;
+		console.log("royal flush");
+	}
+	else{
+		console.log("no royal flush");
+		handRoyalFlush=false;
+	}
+}
+
+function compareHands(hand1, hand2){ //return bigger hand
 
 }
+
 //create a new deck
 var newDeck = new deck;
 newDeck.create();
@@ -71,12 +120,27 @@ newDeck.shuffle();
 //console.log(newDeck.cards);
 
 //create a new hand
-var newHand = new hand;
+var newHand1 = new hand;
 
-//draw from newDeck into newHand
-newHand.draw(newDeck);
 
-//print cards in newHand
-console.log("newHand cards");
-console.log(newHand.cards);
+//draw 5 cards for hand1
+for(i=0;i<5;i++){
+	newHand1.draw(newDeck);
+}
 
+var newHand2 = new hand;
+
+//draw 5 cards for hand2
+for(i=0;i<5;i++){
+	newHand2.draw(newDeck);
+}
+
+//print cards in newHand1
+//console.log("newHand1 cards");
+//console.log(newHand1.cards);
+
+//print cards in newHand2
+//console.log("newHand2 cards");
+//console.log(newHand2.cards);
+
+handHighestValue(newHand1);
