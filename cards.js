@@ -57,7 +57,7 @@ function hand(){
 
 
 
-function isValueInArray(value,array){
+function isValueInArray(value,array){ //check if value is in array
 	if(array.indexOf(value) > -1){
 		return true;
 	}
@@ -90,6 +90,7 @@ function handHighestValue(hand){ //return highest value of a hand
 	//console.log(nameArray);
 
 	//check for royal flush
+	//will be 5 highest values for Spades 10,J,Q,K,A
 	if(isValueInArray(48,valueArray) && isValueInArray(49,valueArray) && isValueInArray(50,valueArray) && isValueInArray(51,valueArray) && isValueInArray(52,valueArray)){
 		handRoyalFlush=true;
 		console.log("royal flush");
@@ -98,6 +99,23 @@ function handHighestValue(hand){ //return highest value of a hand
 		console.log("no royal flush");
 		handRoyalFlush=false;
 	}
+
+	//check for straight flush
+	//sort by value, it will have to be +4 between each one for same suit and increasing number
+
+	sortedValueArray=valueArray;
+	sortedValueArray.sort();
+	//console.log(sortedValueArray);
+	if(sortedValueArray[0] == sortedValueArray[0] && sortedValueArray[1]==sortedValueArray[0]+4 && ortedValueArray[2]==sortedValueArray[0]+8 && ortedValueArray[3]==sortedValueArray[0]+12 && ortedValueArray[4]==sortedValueArray[0]+16){
+		handStraightFlush=true;
+		console.log("straight flush");
+	}
+	else{
+		handStraightFlush=false;
+		console.log("no straight flush");
+	}
+
+
 }
 
 function compareHands(hand1, hand2){ //return bigger hand
