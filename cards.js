@@ -102,11 +102,10 @@ function handHighestValue(hand){ //return highest value of a hand
 
 	//check for straight flush
 	//sort by value, it will have to be +4 between each one for same suit and increasing number
-
 	sortedValueArray=valueArray;
 	sortedValueArray.sort();
 	//console.log(sortedValueArray);
-	if(sortedValueArray[0] == sortedValueArray[0] && sortedValueArray[1]==sortedValueArray[0]+4 && ortedValueArray[2]==sortedValueArray[0]+8 && ortedValueArray[3]==sortedValueArray[0]+12 && ortedValueArray[4]==sortedValueArray[0]+16){
+	if(sortedValueArray[0] == sortedValueArray[0] && sortedValueArray[1]==sortedValueArray[0]+4 && ortedValueArray[2]==sortedValueArray[0]+8 && sortedValueArray[3]==sortedValueArray[0]+12 && ortedValueArray[4]==sortedValueArray[0]+16){
 		handStraightFlush=true;
 		console.log("straight flush");
 	}
@@ -115,7 +114,30 @@ function handHighestValue(hand){ //return highest value of a hand
 		console.log("no straight flush");
 	}
 
+	//check for four of a kind
+	//can sort by name and check first 4, or last 4 are the same
+	sortedNameArray=nameArray;
+	sortedNameArray.sort();
+	console.log(sortedNameArray);
+	if((sortedNameArray[0]==sortedNameArray[1] && sortedNameArray[0]==sortedNameArray[2] && sortedNameArray[0]==sortedNameArray[3]) || (sortedNameArray[4]==sortedNameArray[3] && sortedNameArray[4]==sortedNameArray[2] && sortedNameArray[4]==sortedNameArray[1])){
+		handFourOfAKind=true;
+		console.log("four of a kind");
+	}
+	else{
+		handFourOfAKind=false;
+		console.log("no four of a kind");
+	}
 
+	//check for flush
+	//check all suits are the same
+	if(suitArray[0]==suitArray[1] && suitArray[0]==suitArray[2] && suitArray[0]==suitArray[3] && suitArray[0]==suitArray[4]){
+		handFlush=true;
+		console.log("flush");
+	}
+	else{
+		handFlush=false;
+		console.log("not a flush");
+	}
 }
 
 function compareHands(hand1, hand2){ //return bigger hand
