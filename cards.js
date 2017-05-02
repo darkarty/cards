@@ -66,6 +66,7 @@ function handHighestValue(hand){ //return highest value of a hand
 	handStraightFlush=false;
 	handFourOfAKind=false;
 	handFlush=false;
+	handStraight=false;
 	handTwoPair=false;
 	handThreeOfAKind=false;
 	handPair=false;
@@ -107,6 +108,11 @@ function handHighestValue(hand){ //return highest value of a hand
 		handStraightFlush=false;
 		console.log("not straight flush");
 	}
+	//for straight flush, need to also check A-1-2-3-4-5
+	//insert code here
+	//
+	//
+	//
 
 	//check for four of a kind
 	//can sort by name and check first 4, or last 4 are the same
@@ -129,6 +135,13 @@ function handHighestValue(hand){ //return highest value of a hand
 		handFlush=false;
 		console.log("not flush");
 	}
+
+	//check for straight
+	//need to also check a-1-2-3-4-5
+	//insert code here
+	//
+	//
+	//
 
 	//check for two pairs
 	//check every pair, and add 1 to counter for pair
@@ -192,6 +205,15 @@ function handHighestValue(hand){ //return highest value of a hand
 
 function compareHands(hand1, hand2){ //return bigger hand
 
+	//for straight flush, highest top card wins (A can be used in A-2-3-4-5, but then 5 is the top card)
+	//for four of a kind, highest name of the four cards wins, and then kicker
+	//for full house, highest name of the three cards wins, if equal, rank of pair decides
+	//flush, highest card wins, if equal, compare the next highest card.. and so on
+	//straight, compare highest card
+	//three of a kind, compare three, then highest of remainder 2, then lowest of reminader 2
+	//two pair, highest pair compare, lower pair, kicker compare
+	//pair, compare pair, compare highest card, and so on..
+	//nothing, compare high card
 }
 
 //create a new deck
