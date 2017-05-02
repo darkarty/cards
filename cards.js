@@ -1,7 +1,3 @@
-//test git commit and push
-
-//console.log("hello world");
-
 
 function card(name, suit, value){
 	this.name = name;
@@ -33,7 +29,6 @@ function deck(){
 			for(var i=0;i<52;i++){
 				//find random number between 51 and 0
 				var randomNumber = Math.floor((Math.random() * (numberOfCards-1) + 0));
-				//console.log("randomNumber " + randomNumber);
 				//place this.cards[randomNumber] into first of newOrder;
 				newOrder.push(this.cards[randomNumber]);
 
@@ -91,10 +86,6 @@ function handHighestValue(hand){ //return highest value of a hand
 	sortedNameArray=nameArray;
 	sortedNameArray.sort();
 	
-	//console.log(valueArray);
-	//console.log(suitArray);
-	//console.log(nameArray);
-
 	//check for royal flush
 	//will be 5 highest values for Spades 10,J,Q,K,A
 	if(isValueInArray(48,valueArray) && isValueInArray(49,valueArray) && isValueInArray(50,valueArray) && isValueInArray(51,valueArray) && isValueInArray(52,valueArray)){
@@ -102,34 +93,30 @@ function handHighestValue(hand){ //return highest value of a hand
 		console.log("royal flush");
 	}
 	else{
-		console.log("no royal flush");
+		console.log("not royal flush");
 		handRoyalFlush=false;
 	}
 
 	//check for straight flush
 	//sort by value, it will have to be +4 between each one for same suit and increasing number
-
-	//console.log(sortedValueArray);
-	if(sortedValueArray[0] == sortedValueArray[0] && sortedValueArray[1]==sortedValueArray[0]+4 && ortedValueArray[2]==sortedValueArray[0]+8 && sortedValueArray[3]==sortedValueArray[0]+12 && ortedValueArray[4]==sortedValueArray[0]+16){
+	if(sortedValueArray[0] == sortedValueArray[0] && sortedValueArray[1]==sortedValueArray[0]+4 && sortedValueArray[2]==sortedValueArray[0]+8 && sortedValueArray[3]==sortedValueArray[0]+12 && ortedValueArray[4]==sortedValueArray[0]+16){
 		handStraightFlush=true;
 		console.log("straight flush");
 	}
 	else{
 		handStraightFlush=false;
-		console.log("no straight flush");
+		console.log("not straight flush");
 	}
 
 	//check for four of a kind
 	//can sort by name and check first 4, or last 4 are the same
-
-	//console.log(sortedNameArray);
 	if((sortedNameArray[0]==sortedNameArray[1] && sortedNameArray[0]==sortedNameArray[2] && sortedNameArray[0]==sortedNameArray[3]) || (sortedNameArray[4]==sortedNameArray[3] && sortedNameArray[4]==sortedNameArray[2] && sortedNameArray[4]==sortedNameArray[1])){
 		handFourOfAKind=true;
 		console.log("four of a kind");
 	}
 	else{
 		handFourOfAKind=false;
-		console.log("no four of a kind");
+		console.log("not four of a kind");
 	}
 
 	//check for flush
@@ -140,7 +127,7 @@ function handHighestValue(hand){ //return highest value of a hand
 	}
 	else{
 		handFlush=false;
-		console.log("not a flush");
+		console.log("not flush");
 	}
 
 	//check for two pairs
