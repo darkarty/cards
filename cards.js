@@ -75,9 +75,9 @@ function handHighestValue(hand){ //return highest value of a hand
 	handThreeOfAKind=false;
 	handPair=false;
 
-	valueArray=[];
-	suitArray=[];
-	nameArray=[];
+	var valueArray=[];
+	var suitArray=[];
+	var nameArray=[];
 
 	console.log(hand.cards);
 	for(i=0;i<5;i++){
@@ -144,7 +144,63 @@ function handHighestValue(hand){ //return highest value of a hand
 	}
 
 	//check for two pairs
-	//sort by name, go through hand, if cardPos = cardPos -1, and cardPos != cardPos - 2, then pair +1
+	//check every pair, and add 1 to counter for pair
+	var pairCounter=0;
+	if(nameArray[0]==nameArray[1]){
+		pairCounter+=1;
+	}
+	if(nameArray[1]==nameArray[2]){
+		pairCounter+=1;
+	}
+	if(nameArray[2]==nameArray[3]){
+		pairCounter+=1;
+	}
+	if(nameArray[3]==nameArray[4]){
+		pairCounter+=1;
+	}
+	if(pairCounter>=2 && !handFourOfAKind){ //if it has matches and it is not four of a kind, then it is 2 pair
+		handTwoPair=true;
+		console.log("two pair");
+	}
+	else{
+		handTwoPair=false;
+		console.log("not two pair");
+	}
+
+	//check for three of a kind
+	//check every 3 cards in succession for sorted name array
+	if((nameArray[0]==nameArray[1] && nameArray[1]==nameArray[2]) || (nameArray[1]==nameArray[2] && nameArray[2]==nameArray[3]) || (nameArray[2]==nameArray[3] && nameArray[3]==nameArray[4])){
+		handThreeOfAKind=true;
+		console.log("three of a kind");
+	}
+	else{
+		handThreeOfAKind=false;
+		console.log("not three of a kind");
+	}
+
+	//check for single pair
+	pairCounter=0;
+	if(nameArray[0]==nameArray[1]){
+		pairCounter+=1;
+	}
+	if(nameArray[1]==nameArray[2]){
+		pairCounter+=1;
+	}
+	if(nameArray[2]==nameArray[3]){
+		pairCounter+=1;
+	}
+	if(nameArray[3]==nameArray[4]){
+		pairCounter+=1;
+	}
+	if(pairCounter==1){
+		handPair=true;
+		console.log("pair");
+	}
+	else{
+		handPair=false;
+		console.log("not pair");
+	}
+
 }
 
 function compareHands(hand1, hand2){ //return bigger hand
