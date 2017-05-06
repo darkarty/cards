@@ -99,7 +99,7 @@ function handHighestValue(hand){ //return highest value of a hand
 	}
 
 	//check for straight flush
-	//sort by value, it will have to be +4 between each one for same suit and increasing number
+	//sort by value, it will have to be +4 between each one for same suit and increasing number, can probably just add a modulo 52
 	if(sortedValueArray[0] == sortedValueArray[0] && sortedValueArray[1]==sortedValueArray[0]+4 && sortedValueArray[2]==sortedValueArray[0]+8 && sortedValueArray[3]==sortedValueArray[0]+12 && ortedValueArray[4]==sortedValueArray[0]+16){
 		handStraightFlush=true;
 		console.log("straight flush");
@@ -109,10 +109,16 @@ function handHighestValue(hand){ //return highest value of a hand
 		console.log("not straight flush");
 	}
 	//for straight flush, need to also check A-1-2-3-4-5
-	//insert code here
-	//
-	//
-	//
+	if(sortedNameArray[0]=="2" && sortedNameArray[1]=="3" && sortedNameArray[2]=="4" && sortedNameArray[3]=="5" && sortedNameArray[4]=="A"){
+		if(suitArray[0]==suitArray[1] && suitArray[1]==suitArray[2] && suitArray[2]==suitArray[3] && suitArray[3]==suitArray[4]){ //if suits are same, then straight flush, if not, straight
+			handStraightFlush=true;
+			console.log("straight flush");
+		}
+		else{
+			handStraight=true;
+			console.log("straight");
+		}
+	}
 
 	//check for four of a kind
 	//can sort by name and check first 4, or last 4 are the same
@@ -137,11 +143,40 @@ function handHighestValue(hand){ //return highest value of a hand
 	}
 
 	//check for straight
-	//need to also check a-1-2-3-4-5
-	//insert code here
-	//
-	//
-	//
+
+	//this checks 2,3,4,5,6 up to 6,7,8,9,10
+	if(parseInt(sortedNameArray[0])==parseInt(sortedNameArray[0]) && parseInt(sortedNameArray[0])==parseInt(sortedNameArray[0])+1 && parseInt(sortedNameArray[0])==parseInt(sortedNameArray[0])+2 && parseInt(sortedNameArray[0])==parseInt(sortedNameArray[0])+3 && parseInt(sortedNameArray[0])==parseInt(sortedNameArray[0])+4){
+		console.log("straight");
+	}
+	//a-1-2-3-4-5 already checked above for straight flush
+	//we need edge cases for 7,8,9,10,J   8,9,10,J,Q   9,10,J,Q,K   10,J,Q,K,A
+	if(sortedNameArray[0]=="7" && sortedNameArray[1]=="8" && sortedNameArray[2]=="9" && sortedNameArray[3]=="10" && sortedNameArray[4]=="J"){
+		handStraight=true;
+	}
+	if(sortedNameArray[0]=="8" && sortedNameArray[1]=="9" && sortedNameArray[2]=="10" && sortedNameArray[3]=="J" && sortedNameArray[4]=="Q"){
+		handStraight=true;
+	}
+	if(sortedNameArray[0]=="9" && sortedNameArray[1]=="10" && sortedNameArray[2]=="J" && sortedNameArray[3]=="K" && sortedNameArray[4]=="Q"){
+		handStraight=true;
+	}
+	if(sortedNameArray[0]=="10" && sortedNameArray[1]=="A" && sortedNameArray[2]=="J" && sortedNameArray[3]=="K" && sortedNameArray[4]=="Q"){
+		handStraight=true;
+	}
+
+	if(!handStraight){
+		console.log("not straight");
+	}
+
+	//check for three of a kind
+	//check every 3 cards in succession for sorted name array
+	if((nameArray[0]==nameArray[1] && nameArray[1]==nameArray[2]) || (nameArray[1]==nameArray[2] && nameArray[2]==nameArray[3]) || (nameArray[2]==nameArray[3] && nameArray[3]==nameArray[4])){
+		handThreeOfAKind=true;
+		console.log("three of a kind");
+	}
+	else{
+		handThreeOfAKind=false;
+		console.log("not three of a kind");
+	}
 
 	//check for two pairs
 	//check every pair, and add 1 to counter for pair
@@ -158,24 +193,13 @@ function handHighestValue(hand){ //return highest value of a hand
 	if(nameArray[3]==nameArray[4]){
 		pairCounter+=1;
 	}
-	if(pairCounter>=2 && !handFourOfAKind){ //if it has matches and it is not four of a kind, then it is 2 pair
+	if(pairCounter>=2 && !handFourOfAKind && !handThreeOfAKind){ //if it has matches and it is not four of a kind, then it is 2 pair
 		handTwoPair=true;
 		console.log("two pair");
 	}
 	else{
 		handTwoPair=false;
 		console.log("not two pair");
-	}
-
-	//check for three of a kind
-	//check every 3 cards in succession for sorted name array
-	if((nameArray[0]==nameArray[1] && nameArray[1]==nameArray[2]) || (nameArray[1]==nameArray[2] && nameArray[2]==nameArray[3]) || (nameArray[2]==nameArray[3] && nameArray[3]==nameArray[4])){
-		handThreeOfAKind=true;
-		console.log("three of a kind");
-	}
-	else{
-		handThreeOfAKind=false;
-		console.log("not three of a kind");
 	}
 
 	//check for single pair
