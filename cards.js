@@ -88,8 +88,25 @@ function handHighestValue(hand){ //return highest value of a hand
 	sortedNameArray.sort();
 	
 	//check for royal flush
-	//will be 5 highest values for Spades 10,J,Q,K,A
-	if(isValueInArray(48,valueArray) && isValueInArray(49,valueArray) && isValueInArray(50,valueArray) && isValueInArray(51,valueArray) && isValueInArray(52,valueArray)){
+	//will be 5 highest values for 10,J,Q,K,A, can be ANY SUIT
+
+	//spades
+	if(isValueInArray(36,valueArray) && isValueInArray(40,valueArray) && isValueInArray(44,valueArray) && isValueInArray(48,valueArray) && isValueInArray(52,valueArray)){
+		handRoyalFlush=true;
+		console.log("royal flush");
+	}
+	//hearts
+	if(isValueInArray(35,valueArray) && isValueInArray(39,valueArray) && isValueInArray(43,valueArray) && isValueInArray(47,valueArray) && isValueInArray(51,valueArray)){
+		handRoyalFlush=true;
+		console.log("royal flush");
+	}
+	//diamonds
+	if(isValueInArray(34,valueArray) && isValueInArray(38,valueArray) && isValueInArray(42,valueArray) && isValueInArray(46,valueArray) && isValueInArray(50,valueArray)){
+		handRoyalFlush=true;
+		console.log("royal flush");
+	}
+	//clubs
+	if(isValueInArray(33,valueArray) && isValueInArray(37,valueArray) && isValueInArray(41,valueArray) && isValueInArray(45,valueArray) && isValueInArray(49,valueArray)){
 		handRoyalFlush=true;
 		console.log("royal flush");
 	}
@@ -99,7 +116,7 @@ function handHighestValue(hand){ //return highest value of a hand
 	}
 
 	//check for straight flush
-	//sort by value, it will have to be +4 between each one for same suit and increasing number, can probably just add a modulo 52
+	//sort by value, it will have to be +4 between each one for same suit, also check a-2-3-4-5 wrap around
 	if(sortedValueArray[0] == sortedValueArray[0] && sortedValueArray[1]==sortedValueArray[0]+4 && sortedValueArray[2]==sortedValueArray[0]+8 && sortedValueArray[3]==sortedValueArray[0]+12 && ortedValueArray[4]==sortedValueArray[0]+16){
 		handStraightFlush=true;
 		console.log("straight flush");
