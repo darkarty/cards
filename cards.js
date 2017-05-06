@@ -50,8 +50,6 @@ function hand(){
 	}
 }
 
-
-
 function isValueInArray(value,array){ //check if value is in array
 	if(array.indexOf(value) > -1){
 		return true;
@@ -62,15 +60,13 @@ function isValueInArray(value,array){ //check if value is in array
 }
 
 function isHandRoyalFlush(valueArray,suitArray,nameArray){
-
-	var sortedValueArray=valueArray;
+	//check for royal flush
+	var sortedValueArray=valueArray.slice();
 	sortedValueArray.sort();
-	var sortedNameArray=nameArray;
+	var sortedNameArray=nameArray.slice();
 	sortedNameArray.sort();
 
-	//check for royal flush
 	//will be 5 highest values for 10,J,Q,K,A, can be ANY SUIT
-
 	//spades
 	if(isValueInArray(36,valueArray) && isValueInArray(40,valueArray) && isValueInArray(44,valueArray) && isValueInArray(48,valueArray) && isValueInArray(52,valueArray)){
 		console.log("royal flush");
@@ -93,19 +89,16 @@ function isHandRoyalFlush(valueArray,suitArray,nameArray){
 	}
 
 	console.log("not royal flush");
-	return false;
-	
-
+	return false;	
 }
 
 function isHandStraightFlush(valueArray,suitArray,nameArray){
-	var sortedValueArray=valueArray;
+	//check for straight flush
+	var sortedValueArray=valueArray.slice();
 	sortedValueArray.sort();
-	var sortedNameArray=nameArray;
+	var sortedNameArray=nameArray.slice();
 	sortedNameArray.sort();
 
-
-	//check for straight flush
 	//sort by value, it will have to be +4 between each one for same suit, also check a-2-3-4-5 wrap around
 	if(sortedValueArray[0] == sortedValueArray[0] && sortedValueArray[1]==sortedValueArray[0]+4 && sortedValueArray[2]==sortedValueArray[0]+8 && sortedValueArray[3]==sortedValueArray[0]+12 && ortedValueArray[4]==sortedValueArray[0]+16){
 		console.log("straight flush");
@@ -118,29 +111,169 @@ function isHandStraightFlush(valueArray,suitArray,nameArray){
 		return true;
 		}
 	}
-
-	console.log("not straight flush");
-	return false;
-
+	else{
+		console.log("not straight flush");
+		return false;
+	}
 }
 
 function isHandForOfAKind(valueArray,suitArray,nameArray){
-	var sortedValueArray=valueArray;
-	sortedValueArray.sort();
-	var sortedNameArray=nameArray;
-	sortedNameArray.sort();
-	handFourOfAKind=false;
-
 	//check for four of a kind
+	var sortedValueArray=valueArray.slice();
+	sortedValueArray.sort();
+	var sortedNameArray=nameArray.slice();
+	sortedNameArray.sort();
+
 	//can sort by name and check first 4, or last 4 are the same
 	if((sortedNameArray[0]==sortedNameArray[1] && sortedNameArray[0]==sortedNameArray[2] && sortedNameArray[0]==sortedNameArray[3]) || (sortedNameArray[4]==sortedNameArray[3] && sortedNameArray[4]==sortedNameArray[2] && sortedNameArray[4]==sortedNameArray[1])){
 		console.log("four of a kind");
 		return true;
 	}
-
-	console.log("not four of a kind");
-	return false
+	else{
+		console.log("not four of a kind");
+		return false
+	}
 }
+
+function isHandFlush(valueArray,suitArray,nameArray){
+	//check for flush
+	//check all suits are the same
+	if(suitArray[0]==suitArray[1] && suitArray[0]==suitArray[2] && suitArray[0]==suitArray[3] && suitArray[0]==suitArray[4]){
+		console.log("flush");
+		return true;
+	}
+	else{
+		console.log("not flush");
+		return false;
+	}
+}
+
+function isHandStraight(valueArray,suitArray,nameArray){
+	//check for straight
+	var sortedValueArray=valueArray.slice();
+	sortedValueArray.sort();
+	var sortedNameArray=nameArray.slice();
+	sortedNameArray.sort();
+
+	//this checks 2,3,4,5,6 up to 6,7,8,9,10
+	if(parseInt(sortedNameArray[0])==parseInt(sortedNameArray[0]) && parseInt(sortedNameArray[0])==parseInt(sortedNameArray[0])+1 && parseInt(sortedNameArray[0])==parseInt(sortedNameArray[0])+2 && parseInt(sortedNameArray[0])==parseInt(sortedNameArray[0])+3 && parseInt(sortedNameArray[0])==parseInt(sortedNameArray[0])+4){
+		console.log("straight");
+		return true;
+	}
+
+	//a-1-2-3-4-5
+	if(sortedNameArray[0]=="2" && sortedNameArray[1]=="3" && sortedNameArray[2]=="4" && sortedNameArray[3]=="5" && sortedNameArray[4]=="A"){
+		if(suitArray[0]==suitArray[1] && suitArray[1]==suitArray[2] && suitArray[2]==suitArray[3] && suitArray[3]==suitArray[4]){ //if suits are same, then straight flush, if not, straight
+			console.log("straight flush");
+			return false;
+		}
+		else{
+			console.log("straight");
+			return true;
+		}
+	}
+
+	//we need edge cases for 7,8,9,10,J   8,9,10,J,Q   9,10,J,Q,K   10,J,Q,K,A
+	if(sortedNameArray[0]=="7" && sortedNameArray[1]=="8" && sortedNameArray[2]=="9" && sortedNameArray[3]=="10" && sortedNameArray[4]=="J"){
+		console.log("straight");
+		return true;
+	}
+	if(sortedNameArray[0]=="8" && sortedNameArray[1]=="9" && sortedNameArray[2]=="10" && sortedNameArray[3]=="J" && sortedNameArray[4]=="Q"){
+		console.log("straight");
+		return true;
+	}
+	if(sortedNameArray[0]=="9" && sortedNameArray[1]=="10" && sortedNameArray[2]=="J" && sortedNameArray[3]=="K" && sortedNameArray[4]=="Q"){
+		console.log("straight");
+		return true;
+	}
+	if(sortedNameArray[0]=="10" && sortedNameArray[1]=="A" && sortedNameArray[2]=="J" && sortedNameArray[3]=="K" && sortedNameArray[4]=="Q"){
+		console.log("straight");
+		return true;
+	}
+
+	console.log("not straight");
+	return false;
+}
+
+function isHandThreeOfAKind(valueArray,suitArray,nameArray){
+	//check for three of a kind
+	var sortedValueArray=valueArray.slice();
+	sortedValueArray.sort();
+	var sortedNameArray=nameArray.slice();
+	sortedNameArray.sort();
+
+	//check every 3 cards in succession for sorted name array
+	if((sortedNameArray[0]==sortedNameArray[1] && sortedNameArray[1]==sortedNameArray[2]) || (sortedNameArray[1]==sortedNameArray[2] && sortedNameArray[2]==sortedNameArray[3]) || (sortedNameArray[2]==sortedNameArray[3] && sortedNameArray[3]==sortedNameArray[4])){
+		console.log("three of a kind");
+		return true;
+	}
+	else{
+		console.log("not three of a kind");
+		return false;
+	}
+}
+
+function isHandTwoPair(valueArray,suitArray,nameArray){
+	//check for two pairs
+	var sortedValueArray=valueArray.slice();
+	sortedValueArray.sort();
+	var sortedNameArray=nameArray.slice();
+	sortedNameArray.sort();
+	var pairCounter=0;
+
+	//check every pair, and add 1 to counter for pair
+	if(sortedNameArray[0]==sortedNameArray[1]){
+		pairCounter+=1;
+	}
+	if(sortedNameArray[1]==sortedNameArray[2]){
+		pairCounter+=1;
+	}
+	if(sortedNameArray[2]==sortedNameArray[3]){
+		pairCounter+=1;
+	}
+	if(sortedNameArray[3]==sortedNameArray[4]){
+		pairCounter+=1;
+	}
+	if(pairCounter>=2 && !handFourOfAKind && !handThreeOfAKind){ //if it has matches and it is not four of a kind, then it is 2 pair
+		console.log("two pair");
+		return true;
+	}
+	else{
+		console.log("not two pair");
+		return false;
+	}
+}
+
+function isHandPair(valueArray,suitArray,nameArray){
+	//check for single pair
+	var sortedValueArray=valueArray.slice();
+	sortedValueArray.sort();
+	var sortedNameArray=nameArray.slice();
+	sortedNameArray.sort();
+	var pairCounter=0;
+
+	if(sortedNameArray[0]==sortedNameArray[1]){
+		pairCounter+=1;
+	}
+	if(sortedNameArray[1]==sortedNameArray[2]){
+		pairCounter+=1;
+	}
+	if(sortedNameArray[2]==sortedNameArray[3]){
+		pairCounter+=1;
+	}
+	if(sortedNameArray[3]==sortedNameArray[4]){
+		pairCounter+=1;
+	}
+	if(pairCounter==1){
+		console.log("pair");
+		return true;
+	}
+	else{
+		console.log("not pair");
+		return false;
+	}
+}
+
 function handHighestValue(hand){ //return highest value of a hand
 	handRoyalFlush=false;
 	handStraightFlush=false;
@@ -162,109 +295,19 @@ function handHighestValue(hand){ //return highest value of a hand
 		nameArray.push(hand.cards[i].name);
 	}
 
-	sortedValueArray=valueArray;
+	sortedValueArray=valueArray.slice();
 	sortedValueArray.sort();
-	sortedNameArray=nameArray;
+	sortedNameArray=nameArray.slice();
 	sortedNameArray.sort();
 	
 	handRoyalFlush=isHandRoyalFlush(valueArray,suitArray,nameArray);
 	handStraightFlush=isHandStraightFlush(valueArray,suitArray,nameArray);
 	handFourOfAKind=isHandForOfAKind(valueArray,suitArray,nameArray);
-
-	//check for flush
-	//check all suits are the same
-	if(suitArray[0]==suitArray[1] && suitArray[0]==suitArray[2] && suitArray[0]==suitArray[3] && suitArray[0]==suitArray[4]){
-		handFlush=true;
-		console.log("flush");
-	}
-	else{
-		handFlush=false;
-		console.log("not flush");
-	}
-
-	//check for straight
-
-	//this checks 2,3,4,5,6 up to 6,7,8,9,10
-	if(parseInt(sortedNameArray[0])==parseInt(sortedNameArray[0]) && parseInt(sortedNameArray[0])==parseInt(sortedNameArray[0])+1 && parseInt(sortedNameArray[0])==parseInt(sortedNameArray[0])+2 && parseInt(sortedNameArray[0])==parseInt(sortedNameArray[0])+3 && parseInt(sortedNameArray[0])==parseInt(sortedNameArray[0])+4){
-		console.log("straight");
-	}
-	//a-1-2-3-4-5 already checked above for straight flush
-	//we need edge cases for 7,8,9,10,J   8,9,10,J,Q   9,10,J,Q,K   10,J,Q,K,A
-	if(sortedNameArray[0]=="7" && sortedNameArray[1]=="8" && sortedNameArray[2]=="9" && sortedNameArray[3]=="10" && sortedNameArray[4]=="J"){
-		handStraight=true;
-	}
-	if(sortedNameArray[0]=="8" && sortedNameArray[1]=="9" && sortedNameArray[2]=="10" && sortedNameArray[3]=="J" && sortedNameArray[4]=="Q"){
-		handStraight=true;
-	}
-	if(sortedNameArray[0]=="9" && sortedNameArray[1]=="10" && sortedNameArray[2]=="J" && sortedNameArray[3]=="K" && sortedNameArray[4]=="Q"){
-		handStraight=true;
-	}
-	if(sortedNameArray[0]=="10" && sortedNameArray[1]=="A" && sortedNameArray[2]=="J" && sortedNameArray[3]=="K" && sortedNameArray[4]=="Q"){
-		handStraight=true;
-	}
-
-	if(!handStraight){
-		console.log("not straight");
-	}
-
-	//check for three of a kind
-	//check every 3 cards in succession for sorted name array
-	if((nameArray[0]==nameArray[1] && nameArray[1]==nameArray[2]) || (nameArray[1]==nameArray[2] && nameArray[2]==nameArray[3]) || (nameArray[2]==nameArray[3] && nameArray[3]==nameArray[4])){
-		handThreeOfAKind=true;
-		console.log("three of a kind");
-	}
-	else{
-		handThreeOfAKind=false;
-		console.log("not three of a kind");
-	}
-
-	//check for two pairs
-	//check every pair, and add 1 to counter for pair
-	var pairCounter=0;
-	if(nameArray[0]==nameArray[1]){
-		pairCounter+=1;
-	}
-	if(nameArray[1]==nameArray[2]){
-		pairCounter+=1;
-	}
-	if(nameArray[2]==nameArray[3]){
-		pairCounter+=1;
-	}
-	if(nameArray[3]==nameArray[4]){
-		pairCounter+=1;
-	}
-	if(pairCounter>=2 && !handFourOfAKind && !handThreeOfAKind){ //if it has matches and it is not four of a kind, then it is 2 pair
-		handTwoPair=true;
-		console.log("two pair");
-	}
-	else{
-		handTwoPair=false;
-		console.log("not two pair");
-	}
-
-	//check for single pair
-	pairCounter=0;
-	if(nameArray[0]==nameArray[1]){
-		pairCounter+=1;
-	}
-	if(nameArray[1]==nameArray[2]){
-		pairCounter+=1;
-	}
-	if(nameArray[2]==nameArray[3]){
-		pairCounter+=1;
-	}
-	if(nameArray[3]==nameArray[4]){
-		pairCounter+=1;
-	}
-	if(pairCounter==1){
-		handPair=true;
-		console.log("pair");
-	}
-	else{
-		handPair=false;
-		console.log("not pair");
-	}
-
+	handFlush=isHandFlush(valueArray,suitArray,nameArray);
+	handStraight=isHandStraight(valueArray,suitArray,nameArray);
+	handThreeOfAKind=isHandThreeOfAKind(valueArray,suitArray,nameArray);
+	handTwoPair=isHandTwoPair(valueArray,suitArray,nameArray);
+	handPair=isHandPair(valueArray,suitArray,nameArray);
 }
 
 function compareHands(hand1, hand2){ //return bigger hand
