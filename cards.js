@@ -67,36 +67,34 @@ function isHandRoyalFlush(valueArray,suitArray,nameArray){
 	sortedValueArray.sort();
 	var sortedNameArray=nameArray;
 	sortedNameArray.sort();
-	var handRoyaFlush=false;
 
 	//check for royal flush
 	//will be 5 highest values for 10,J,Q,K,A, can be ANY SUIT
 
 	//spades
 	if(isValueInArray(36,valueArray) && isValueInArray(40,valueArray) && isValueInArray(44,valueArray) && isValueInArray(48,valueArray) && isValueInArray(52,valueArray)){
-		handRoyalFlush=true;		
-	}
-	//hearts
-	if(isValueInArray(35,valueArray) && isValueInArray(39,valueArray) && isValueInArray(43,valueArray) && isValueInArray(47,valueArray) && isValueInArray(51,valueArray)){
-		handRoyalFlush=true;
-	}
-	//diamonds
-	if(isValueInArray(34,valueArray) && isValueInArray(38,valueArray) && isValueInArray(42,valueArray) && isValueInArray(46,valueArray) && isValueInArray(50,valueArray)){
-		handRoyalFlush=true;
-	}
-	//clubs
-	if(isValueInArray(33,valueArray) && isValueInArray(37,valueArray) && isValueInArray(41,valueArray) && isValueInArray(45,valueArray) && isValueInArray(49,valueArray)){
-		handRoyalFlush=true;
-	}
-
-	if(handRoyalFlush){
 		console.log("royal flush");
 		return true;
 	}
-	else{
-		console.log("not royal flush");
-		return false;
+	//hearts
+	if(isValueInArray(35,valueArray) && isValueInArray(39,valueArray) && isValueInArray(43,valueArray) && isValueInArray(47,valueArray) && isValueInArray(51,valueArray)){
+		console.log("royal flush");
+		return true;
 	}
+	//diamonds
+	if(isValueInArray(34,valueArray) && isValueInArray(38,valueArray) && isValueInArray(42,valueArray) && isValueInArray(46,valueArray) && isValueInArray(50,valueArray)){
+		console.log("royal flush");
+		return true;
+	}
+	//clubs
+	if(isValueInArray(33,valueArray) && isValueInArray(37,valueArray) && isValueInArray(41,valueArray) && isValueInArray(45,valueArray) && isValueInArray(49,valueArray)){
+		console.log("royal flush");
+		return true;
+	}
+
+	console.log("not royal flush");
+	return false;
+	
 
 }
 
@@ -105,28 +103,25 @@ function isHandStraightFlush(valueArray,suitArray,nameArray){
 	sortedValueArray.sort();
 	var sortedNameArray=nameArray;
 	sortedNameArray.sort();
-	var handStraightFlush=false;
+
 
 	//check for straight flush
 	//sort by value, it will have to be +4 between each one for same suit, also check a-2-3-4-5 wrap around
 	if(sortedValueArray[0] == sortedValueArray[0] && sortedValueArray[1]==sortedValueArray[0]+4 && sortedValueArray[2]==sortedValueArray[0]+8 && sortedValueArray[3]==sortedValueArray[0]+12 && ortedValueArray[4]==sortedValueArray[0]+16){
-		handStraightFlush=true;
+		console.log("straight flush");
+		return true;
 	}
 	//for straight flush, need to also check A-1-2-3-4-5
 	if(sortedNameArray[0]=="2" && sortedNameArray[1]=="3" && sortedNameArray[2]=="4" && sortedNameArray[3]=="5" && sortedNameArray[4]=="A"){
 		if(suitArray[0]==suitArray[1] && suitArray[1]==suitArray[2] && suitArray[2]==suitArray[3] && suitArray[3]==suitArray[4]){ //if suits are same, then straight flush, if not, straight
-			handStraightFlush=true;
+		console.log("straight flush");
+		return true;
 		}
 	}
 
-	if(handStraightFlush){
-		console.log("straight flush");
-		return true;
-	}
-	else{
-		console.log("not straight flush");
-		return false;
-	}
+	console.log("not straight flush");
+	return false;
+
 }
 
 function isHandForOfAKind(valueArray,suitArray,nameArray){
@@ -139,20 +134,12 @@ function isHandForOfAKind(valueArray,suitArray,nameArray){
 	//check for four of a kind
 	//can sort by name and check first 4, or last 4 are the same
 	if((sortedNameArray[0]==sortedNameArray[1] && sortedNameArray[0]==sortedNameArray[2] && sortedNameArray[0]==sortedNameArray[3]) || (sortedNameArray[4]==sortedNameArray[3] && sortedNameArray[4]==sortedNameArray[2] && sortedNameArray[4]==sortedNameArray[1])){
-
-		handFourOfAKind=true;
-	}
-	if(handFourOfAKind){
 		console.log("four of a kind");
 		return true;
 	}
-	else{
-		console.log("not four of a kind");
-		return false
-	}
 
-
-
+	console.log("not four of a kind");
+	return false
 }
 function handHighestValue(hand){ //return highest value of a hand
 	handRoyalFlush=false;
