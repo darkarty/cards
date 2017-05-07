@@ -248,14 +248,15 @@ function isHandPair(valueArray,suitArray,nameArray){
 }
 
 function handHighestValue(hand){ //return highest value of a hand
-	handRoyalFlush=false;
-	handStraightFlush=false;
-	handFourOfAKind=false;
-	handFlush=false;
-	handStraight=false;
-	handTwoPair=false;
-	handThreeOfAKind=false;
-	handPair=false;
+	//set values for each
+	handRoyalFlush=false; //value 10
+	handStraightFlush=false; //value 9
+	handFourOfAKind=false; //value 8
+	handFlush=false; //value 7
+	handStraight=false; //value 6
+	handTwoPair=false; //value 5
+	handThreeOfAKind=false; //value 4
+	handPair=false; //value 3
 
 	var valueArray=[];
 	var suitArray=[];
@@ -285,10 +286,50 @@ function handHighestValue(hand){ //return highest value of a hand
 	console.log("three of a kind "+ handThreeOfAKind);
 	console.log("two pair "+ handTwoPair);
 	console.log("pair "+ handPair);
+	
+	if(handRoyalFlush){
+		return 10;
+	}
+	else if(handStraightFlush){
+		return 9;
+	}
+	else if(handFourOfAKind){
+		return 8;
+	}
+	else if(handFlush){
+		return 7;
+	}
+	else if(handStraight){
+		return 6;
+	}
+	else if(handTwoPair){
+		return 5;
+	}
+	else if(handThreeOfAKind){
+		return 4;
+	}
+	else if(handPair){
+		return 3;
+	}
+	else{
+		return 2;
+	}
 }
 
 function compareHands(hand1, hand2){ //return bigger hand
 
+	var hand1Value=handHighestValue(hand1);
+	var hand2Value=handHighestValue(hand2);
+
+	if(hand1Value==hand2Value){
+		console.log("tie, need tie breaker");
+	}
+	if(hand1Value>hand2Value){
+		console.log("hand 1 wins");
+	}
+	if(hand1Value<hand2Value){
+		console.log("hand 2 wins");
+	}
 	//for straight flush, highest top card wins (A can be used in A-2-3-4-5, but then 5 is the top card)
 	//for four of a kind, highest name of the four cards wins, and then kicker
 	//for full house, highest name of the three cards wins, if equal, rank of pair decides
@@ -339,4 +380,4 @@ for(i=0;i<5;i++){
 //console.log("newHand2 cards");
 //console.log(newHand2.cards);
 
-handHighestValue(newHand1);
+compareHands(newHand1,newHand2);
