@@ -294,15 +294,15 @@ function handHighestValue(hand){ //return highest value of a hand
 		nameArray.push(hand.cards[i].name);
 	}
 
-	handRoyalFlush=isHandRoyalFlush(valueArray,suitArray,nameArray);
-	handStraightFlush=isHandStraightFlush(valueArray,suitArray,nameArray);
-	handFourOfAKind=isHandForOfAKind(valueArray,suitArray,nameArray);
+	handRoyalFlush=isHandRoyalFlush(valueArray, suitArray, nameArray);
+	handStraightFlush=isHandStraightFlush(valueArray, suitArray, nameArray);
+	handFourOfAKind=isHandForOfAKind(valueArray, suitArray, nameArray);
 	handFullHouse=isHandFullHouse(valueArray, suitArray, nameArray);
-	handFlush=isHandFlush(valueArray,suitArray,nameArray);
-	handStraight=isHandStraight(valueArray,suitArray,nameArray);
-	handThreeOfAKind=isHandThreeOfAKind(valueArray,suitArray,nameArray);
-	handTwoPair=isHandTwoPair(valueArray,suitArray,nameArray, handFourOfAKind, handThreeOfAKind);
-	handPair=isHandPair(valueArray,suitArray,nameArray);
+	handFlush=isHandFlush(valueArray, suitArray, nameArray);
+	handStraight=isHandStraight(valueArray, suitArray, nameArray);
+	handThreeOfAKind=isHandThreeOfAKind(valueArray, suitArray, nameArray);
+	handTwoPair=isHandTwoPair(valueArray, suitArray, nameArray, handFourOfAKind, handThreeOfAKind);
+	handPair=isHandPair(valueArray, suitArray, nameArray);
 
 /*	//print true/false for checks
 	console.log("royal flush "+ handRoyalFlush);
@@ -355,7 +355,7 @@ function tieBreakerHighCard(sortedValueArrayForHand1, sortedValueArrayForHand2){
 		//compare max value between arrays, if they are equal compare next highest card
 		//return 1 if hand1 wins, return -1 if hand2 wins, return 0 if tie
 
-		for(i=0;i<5;i++){
+		for(i=0;i<sortedValueArrayForHand1.length;i++){
 			if(sortedValueArrayForHand1[i]>sortedValueArrayForHand2[i]){
 				return 1;
 			}
@@ -366,7 +366,54 @@ function tieBreakerHighCard(sortedValueArrayForHand1, sortedValueArrayForHand2){
 		return 0;
 
 }
-function tieBreaker(hand1, hand2, handValue){ //return hand1 if hand1 wins, return hand2 if hand2 wins
+
+function printPokerHandName(handValue){
+
+	var output=""
+
+	if(handValue==10){ // both royal flush
+		output+="royal flush";
+		return output;
+	}
+	if(handValue==9){ //for straight flush, highest top card wins (A can be used in A-2-3-4-5, but then 5 is the top card) 
+		output+="straight flush";
+		return output;
+	}
+	if(handValue==8){ //for four of a kind, highest name of the four cards wins, and then kicker
+		output+="four of a kind";
+		return output;
+	}
+	if(handValue==7){ //for full house, highest name of the three cards wins, if equal, rank of pair decides
+		output+="full house";
+		return output;
+	}
+	if(handValue==6){ //flush, highest card wins, if equal, compare the next highest card.. and so on
+		output+="flush";
+		return output;
+	}
+	if(handValue==5){ //straight, compare highest card
+		output+="straight";
+		return output;
+	}
+	if(handValue==4){ //two pair, highest pair compare, lower pair, kicker compare
+		output+="two pair";
+		return output;
+	}
+	if(handValue==3){ //three of a kind, compare three, then highest of remainder 2, then lowest of reminader 2
+		output+="three of a kind";
+		return output;
+	}
+	if(handValue==2){ //pair, compare pair, compare highest card, and so on..
+		//compare pair, if pair equal, remove pair and compare highest cards using function written already. 
+		output+="pair";
+		return output;
+	}
+	if(handValue==1){
+		output+="high card";
+		return output;
+	}
+}
+function tieBreaker(hand1, hand2, handValue){ //return 1 if hand1 wins, return -1 if hand2 wins, return 0 if tie
 
 	console.log("tie breaker");
 	var valueArrayForHand1=[];
@@ -401,6 +448,7 @@ function tieBreaker(hand1, hand2, handValue){ //return hand1 if hand1 wins, retu
 
 	if(handValue==10){ // both royal flush
 		console.log("both royal flush, tie")
+		return 0;
 	}
 	if(handValue==9){ //for straight flush, highest top card wins (A can be used in A-2-3-4-5, but then 5 is the top card) 
 
@@ -429,13 +477,13 @@ function tieBreaker(hand1, hand2, handValue){ //return hand1 if hand1 wins, retu
 	if(handValue==1){ //nothing, compare high card, if high card is equal, compare  second highest card.. and so on.
 
 		if(tieBreakerHighCard(sortedValueArrayForHand1,sortedValueArrayForHand2)==1){
-			console.log("hand1 wins");
+			return 1; //hand1 wins
 		}
 		if(tieBreakerHighCard(sortedValueArrayForHand1,sortedValueArrayForHand2)==-1){
-			console.log("hand2 wins");
+			return -1; //hand2 wins
 		}
 		if(tieBreakerHighCard(sortedValueArrayForHand1,sortedValueArrayForHand2)==0){
-			console.log("tie between hands");
+			return 0; //hand2 wins
 		}
 	}
 }
@@ -443,16 +491,32 @@ function compareHands(hand1, hand2){ //return bigger hand
 
 	var hand1Value=handHighestValue(hand1);
 	var hand2Value=handHighestValue(hand2);
+	var pokerHandName="";
 
 	if(hand1Value==hand2Value){
 		console.log("tie, need tie breaker");
-		tieBreaker(hand1, hand2, hand1Value);
+		var tieBreakerValue=tieBreaker(hand1, hand2, hand1Value);
+
+		if(tieBreakerValue==1){
+			pokerHandName+=printPokerHandName(hand1Value);
+			console.log("hand1 wins with "+ pokerHandName);
+		}
+		if(tieBreakerValue==-1){
+			pokerHandName+=printPokerHandName(hand2Value);
+			console.log("hand2 wins with "+ pokerHandName);
+		}
+		if(tieBreakerValue==0){
+			pokerHandName+=printPokerHandName(hand1Value);
+			console.log("hands are tied");
+		}
 	}
 	if(hand1Value>hand2Value){
-		console.log("hand 1 wins");
+		pokerHandName+=printPokerHandName(hand1Value);
+		console.log("hand 1 wins with " + pokerHandName);
 	}
 	if(hand1Value<hand2Value){
-		console.log("hand 2 wins");
+		pokerHandName+=printPokerHandName(hand2Value);
+		console.log("hand 2 wins with " + pokerHandName);
 	}
 }
 
