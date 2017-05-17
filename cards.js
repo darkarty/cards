@@ -82,7 +82,7 @@ function findMaxInArray(array){
 function isHandRoyalFlush(valueArray,suitArray,nameArray){
 	//check for royal flush
 	var sortedValueArray=valueArray.slice();
-	sortedValueArray.sort();
+	sortedValueArray.sort(sortNumber);
 	var sortedNameArray=nameArray.slice();
 	sortedNameArray.sort();
 
@@ -98,7 +98,7 @@ function isHandRoyalFlush(valueArray,suitArray,nameArray){
 function isHandStraightFlush(valueArray,suitArray,nameArray){
 	//check for straight flush
 	var sortedValueArray=valueArray.slice();
-	sortedValueArray.sort();
+	sortedValueArray.sort(sortNumber);
 	var sortedNameArray=nameArray.slice();
 	sortedNameArray.sort();
 
@@ -120,7 +120,7 @@ function isHandStraightFlush(valueArray,suitArray,nameArray){
 function isHandForOfAKind(valueArray,suitArray,nameArray){
 	//check for four of a kind
 	var sortedValueArray=valueArray.slice();
-	sortedValueArray.sort();
+	sortedValueArray.sort(sortNumber);
 	var sortedNameArray=nameArray.slice();
 	sortedNameArray.sort();
 
@@ -136,7 +136,7 @@ function isHandForOfAKind(valueArray,suitArray,nameArray){
 function isHandFullHouse(valueArray,suitArray,nameArray){
 	//check for full house
 	var sortedValueArray=valueArray.slice();
-	sortedValueArray.sort();
+	sortedValueArray.sort(sortNumber);
 	var sortedNameArray=nameArray.slice();
 	sortedNameArray.sort();
 
@@ -162,7 +162,7 @@ function isHandFlush(valueArray,suitArray,nameArray){
 function isHandStraight(valueArray,suitArray,nameArray){
 	//check for straight
 	var sortedValueArray=valueArray.slice();
-	sortedValueArray.sort();
+	sortedValueArray.sort(sortNumber);
 	var sortedNameArray=nameArray.slice();
 	sortedNameArray.sort();
 
@@ -201,7 +201,7 @@ function isHandStraight(valueArray,suitArray,nameArray){
 function isHandThreeOfAKind(valueArray,suitArray,nameArray){
 	//check for three of a kind
 	var sortedValueArray=valueArray.slice();
-	sortedValueArray.sort();
+	sortedValueArray.sort(sortNumber);
 	var sortedNameArray=nameArray.slice();
 	sortedNameArray.sort();
 
@@ -214,10 +214,10 @@ function isHandThreeOfAKind(valueArray,suitArray,nameArray){
 	}
 }
 
-function isHandTwoPair(valueArray,suitArray,nameArray){
+function isHandTwoPair(valueArray,suitArray,nameArray, handFourOfAKind, handThreeOfAKind){
 	//check for two pairs
 	var sortedValueArray=valueArray.slice();
-	sortedValueArray.sort();
+	sortedValueArray.sort(sortNumber);
 	var sortedNameArray=nameArray.slice();
 	sortedNameArray.sort();
 	var pairCounter=0;
@@ -246,7 +246,7 @@ function isHandTwoPair(valueArray,suitArray,nameArray){
 function isHandPair(valueArray,suitArray,nameArray){
 	//check for single pair
 	var sortedValueArray=valueArray.slice();
-	sortedValueArray.sort();
+	sortedValueArray.sort(sortNumber);
 	var sortedNameArray=nameArray.slice();
 	sortedNameArray.sort();
 	var pairCounter=0;
@@ -273,15 +273,15 @@ function isHandPair(valueArray,suitArray,nameArray){
 
 function handHighestValue(hand){ //return highest value of a hand
 	//set values for each
-	handRoyalFlush=false; //value 10
-	handStraightFlush=false; //value 9
-	handFourOfAKind=false; //value 8
-	handFullHouse=false; //value 7
-	handFlush=false; //value 5
-	handStraight=false; //value 4
-	handTwoPair=false; //value 3
-	handThreeOfAKind=false; //value 3
-	handPair=false; //value 2
+	var handRoyalFlush=false; //value 10
+	var handStraightFlush=false; //value 9
+	var handFourOfAKind=false; //value 8
+	var handFullHouse=false; //value 7
+	var handFlush=false; //value 5
+	var handStraight=false; //value 4
+	var handTwoPair=false; //value 3
+	var handThreeOfAKind=false; //value 3
+	var handPair=false; //value 2
 
 	var valueArray=[];
 	var suitArray=[];
@@ -301,7 +301,7 @@ function handHighestValue(hand){ //return highest value of a hand
 	handFlush=isHandFlush(valueArray,suitArray,nameArray);
 	handStraight=isHandStraight(valueArray,suitArray,nameArray);
 	handThreeOfAKind=isHandThreeOfAKind(valueArray,suitArray,nameArray);
-	handTwoPair=isHandTwoPair(valueArray,suitArray,nameArray);
+	handTwoPair=isHandTwoPair(valueArray,suitArray,nameArray, handFourOfAKind, handThreeOfAKind);
 	handPair=isHandPair(valueArray,suitArray,nameArray);
 
 /*	//print true/false for checks
@@ -346,25 +346,25 @@ function handHighestValue(hand){ //return highest value of a hand
 		return 1;
 	}
 }
-function tieBreakerHighCard(valueArrayForHand1, valueArrayForHand2){
+
+function sortNumber(a,b){
+	return b-a;
+}
+
+function tieBreakerHighCard(sortedValueArrayForHand1, sortedValueArrayForHand2){
 		//compare max value between arrays, if they are equal compare next highest card
-		if(valueArrayForHand1.length==0){ //base case when all cards have been checked
-			console.log("hands are equal")
+		//return 1 if hand1 wins, return -1 if hand2 wins, return 0 if tie
+
+		for(i=0;i<5;i++){
+			if(sortedValueArrayForHand1[i]>sortedValueArrayForHand2[i]){
+				return 1;
+			}
+			if(sortedValueArrayForHand1[i]<sortedValueArrayForHand2[i]){
+				return -1;
+			}
 		}
-		else if(findMaxInArray(valueArrayForHand1) > findMaxInArray(valueArrayForHand2)){
-			console.log("hand1 wins");
-		}
-		else if(findMaxInArray(valueArrayForHand1) < findMaxInArray(valueArrayForHand2)){
-			console.log("hand2 wins")
-		}
-		else{ //if they are equal
-			//remove max and recurse
-			var index1=valueArrayForHand1.indexOf(findMaxInArray(valueArrayForHand1));
-			var index2=valueArrayForHand2.indexOf(findMaxInArray(valueArrayForHand2));
-			valueArrayForHand1.splice(index1,1);
-			valueArrayForHand2.splice(index2,1);
-			tieBreakerHighCard(valueArrayForHand1, valueArrayForHand2); //recurse
-		}
+		return 0;
+
 }
 function tieBreaker(hand1, hand2, handValue){ //return hand1 if hand1 wins, return hand2 if hand2 wins
 
@@ -390,12 +390,12 @@ function tieBreaker(hand1, hand2, handValue){ //return hand1 if hand1 wins, retu
 	}
 
 	var sortedValueArrayForHand1=valueArrayForHand1.slice();
-	sortedValueArrayForHand1.sort();
+	sortedValueArrayForHand1.sort(sortNumber);
 	var sortedNameArrayForHand1=nameArrayForHand1.slice();
 	sortedNameArrayForHand1.sort();
 
 	var sortedValueArrayForHand2=valueArrayForHand2.slice();
-	sortedValueArrayForHand2.sort();
+	sortedValueArrayForHand2.sort(sortNumber);
 	var sortedNameArrayForHand2=nameArrayForHand2.slice();
 	sortedNameArrayForHand2.sort();
 
@@ -424,10 +424,19 @@ function tieBreaker(hand1, hand2, handValue){ //return hand1 if hand1 wins, retu
 		
 	}
 	if(handValue==2){ //pair, compare pair, compare highest card, and so on..
-		
+		//compare pair, if pair equal, remove pair and compare highest cards using function written already. 
 	}
 	if(handValue==1){ //nothing, compare high card, if high card is equal, compare  second highest card.. and so on.
-		tieBreakerHighCard(valueArrayForHand1,valueArrayForHand2);
+
+		if(tieBreakerHighCard(sortedValueArrayForHand1,sortedValueArrayForHand2)==1){
+			console.log("hand1 wins");
+		}
+		if(tieBreakerHighCard(sortedValueArrayForHand1,sortedValueArrayForHand2)==-1){
+			console.log("hand2 wins");
+		}
+		if(tieBreakerHighCard(sortedValueArrayForHand1,sortedValueArrayForHand2)==0){
+			console.log("tie between hands");
+		}
 	}
 }
 function compareHands(hand1, hand2){ //return bigger hand
