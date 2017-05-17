@@ -371,40 +371,39 @@ function printPokerHandName(handValue){
 
 	var output=""
 
-	if(handValue==10){ // both royal flush
+	if(handValue==10){ 
 		output+="royal flush";
 		return output;
 	}
-	if(handValue==9){ //for straight flush, highest top card wins (A can be used in A-2-3-4-5, but then 5 is the top card) 
+	if(handValue==9){ 
 		output+="straight flush";
 		return output;
 	}
-	if(handValue==8){ //for four of a kind, highest name of the four cards wins, and then kicker
+	if(handValue==8){ 
 		output+="four of a kind";
 		return output;
 	}
-	if(handValue==7){ //for full house, highest name of the three cards wins, if equal, rank of pair decides
+	if(handValue==7){ 
 		output+="full house";
 		return output;
 	}
-	if(handValue==6){ //flush, highest card wins, if equal, compare the next highest card.. and so on
+	if(handValue==6){ 
 		output+="flush";
 		return output;
 	}
-	if(handValue==5){ //straight, compare highest card
+	if(handValue==5){
 		output+="straight";
 		return output;
 	}
-	if(handValue==4){ //two pair, highest pair compare, lower pair, kicker compare
+	if(handValue==4){
 		output+="two pair";
 		return output;
 	}
-	if(handValue==3){ //three of a kind, compare three, then highest of remainder 2, then lowest of reminader 2
+	if(handValue==3){ 
 		output+="three of a kind";
 		return output;
 	}
-	if(handValue==2){ //pair, compare pair, compare highest card, and so on..
-		//compare pair, if pair equal, remove pair and compare highest cards using function written already. 
+	if(handValue==2){
 		output+="pair";
 		return output;
 	}
