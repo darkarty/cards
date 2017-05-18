@@ -462,7 +462,7 @@ function tieBreaker(hand1, hand2, handValue){ //return 1 if hand1 wins, return -
 		
 	}
 	if(handValue==5){ //straight, compare highest card
-		
+		//this would basically be same as looking for high card.
 	}
 	if(handValue==4){ //two pair, highest pair compare, lower pair, kicker compare
 		
@@ -475,13 +475,14 @@ function tieBreaker(hand1, hand2, handValue){ //return 1 if hand1 wins, return -
 	}
 	if(handValue==1){ //nothing, compare high card, if high card is equal, compare  second highest card.. and so on.
 
-		if(tieBreakerHighCard(sortedValueArrayForHand1,sortedValueArrayForHand2)==1){
+		var tieBreakerHighCardValue=tieBreakerHighCard(sortedValueArrayForHand1,sortedValueArrayForHand2);
+		if(tieBreakerHighCardValue==1){
 			return 1; //hand1 wins
 		}
-		if(tieBreakerHighCard(sortedValueArrayForHand1,sortedValueArrayForHand2)==-1){
+		if(tieBreakerHighCardValue==-1){
 			return -1; //hand2 wins
 		}
-		if(tieBreakerHighCard(sortedValueArrayForHand1,sortedValueArrayForHand2)==0){
+		if(tieBreakerHighCardValue==0){
 			return 0; //hand2 wins
 		}
 	}
