@@ -409,6 +409,46 @@ function tieBreakerPair(sortedValueArrayForHand1, sortedValueArrayForHand2){
 
 }
 
+function tieBreakerThreeOfAKind(sortedValueArrayForHand1, sortedValueArrayForHand2){
+	var sortedValueArrayForHand1Copy=sortedValueArrayForHand1.slice();
+	var sortedValueArrayForHand2Copy=sortedValueArrayForHand2.slice();
+
+	var tripleForHand1;
+	var nonPairArrayForHand1=[];
+
+	var tripleForHand2;
+	var nonPairArrayForHand2=[];
+
+	for(i=0;i<sortedValueArrayForHand1.length - 1;i++){
+		if(sortedValueArrayForHand1[i]==sortedValueArrayForHand1[i+1] && sortedValueArrayForHand1[i]==sortedValueArrayForHand1[i+3]){ //this is a triple
+			tripleForHand1=sortedValueArrayForHand1[i];
+			//remove this pair from the copy
+			sortedValueArrayForHand1Copy.splice(i,1);
+			sortedValueArrayForHand1Copy.splice(i,1);
+			sortedValueArrayForHand1Copy.splice(i,1);
+		}
+		if(sortedValueArrayForHand2[i]==sortedValueArrayForHand2[i+1] && sortedValueArrayForHand1[i]==sortedValueArrayForHand1[i+3]){ //this is a triple
+			tripleForHand2=sortedValueArrayForHand2[i];
+			//remove this pair from the copy
+			sortedValueArrayForHand2Copy.splice(i,1);
+			sortedValueArrayForHand2Copy.splice(i,1);
+			sortedValueArrayForHand1Copy.splice(i,1);
+		}
+	}
+
+	//see which value in tripleForHand is bigger, if equal, then we used sortedValueArrayForHandXCopy to find next high card
+	if(tripleForHand1>tripleForHand2){
+		return 1;
+	}
+	if(tripleForHand1<tripleForHand2){
+		return -1;
+	}
+	if(tripleForHand1==tripleForHand2){
+		return tieBreakerHighCard(sortedValueArrayForHand1Copy, sortedValueArrayForHand2Copy);
+	}
+
+}
+
 function printPokerHandName(handValue){
 
 	var output=""
@@ -510,19 +550,20 @@ function tieBreaker(hand1, hand2, handValue){ //return 1 if hand1 wins, return -
 		
 	}
 	if(handValue==3){ //three of a kind, compare three, then highest of remainder 2, then lowest of reminader 2
-		
+	
+		return tieBreakerThreeOfAKind(sortedValueArrayForHand1, sortedValueArrayForHand2);	
 	}
 	if(handValue==2){ //pair, compare pair, compare highest card, and so on..
 		//compare pair, if pair equal, remove pair and compare highest cards using function written already. 
 
-		var tieBreakerPairValue=tieBreakerPair(sortedValueArrayForHand1, sortedValueArrayForHand2);
-		return tieBreakerPairValue;
+		return tieBreakerPair(sortedValueArrayForHand1, sortedValueArrayForHand2);
+
 
 	}
 	if(handValue==1){ //nothing, compare high card, if high card is equal, compare  second highest card.. and so on.
 
-		var tieBreakerHighCardValue=tieBreakerHighCard(sortedValueArrayForHand1,sortedValueArrayForHand2);
-		return tieBreakerHighCardValue;
+		return tieBreakerHighCard(sortedValueArrayForHand1,sortedValueArrayForHand2);
+
 
 	}
 }
