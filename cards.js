@@ -640,3 +640,4 @@ for(i=0;i<5;i++){
 //console.log(newHand2.cards);
 
 compareHands(newHand1,newHand2);
+
