@@ -449,6 +449,54 @@ function tieBreakerThreeOfAKind(sortedValueArrayForHand1, sortedValueArrayForHan
 
 }
 
+function tieBreakerTwoPair(sortedValueArrayForHand1, sortedValueArrayForHand2){
+
+	//make copy of sortedValueArrays so that we can splice them later
+	var sortedValueArrayForHand1Copy=sortedValueArrayForHand1.slice();
+	var sortedValueArrayForHand2Copy=sortedValueArrayForHand2.slice();
+
+	var pairsForHand1=[0,0];
+	var nonPairArrayForHand1;
+
+	var pairsForHand2=[0,0];
+	var nonPairArrayForHand2;
+
+	for(i=0;i<sortedValueArrayForHand1.length - 1;i++){
+		if(sortedValueArrayForHand1[i]==sortedValueArrayForHand1[i+1]){ //this is a pair
+			if(pairsForHand1[0]==0){
+				pairForHand1[0]=sortedValueArrayForHand1[i];
+			}
+			else{
+				pairForHand1[1]=sortedValueArrayForHand1[i];
+			}
+			//remove this pair from the copy
+			sortedValueArrayForHand1Copy.splice(i,1);
+			sortedValueArrayForHand1Copy.splice(i,1);
+		}
+		if(sortedValueArrayForHand2[i]==sortedValueArrayForHand2[i+1]){ //this is a pair
+			if(pairsForHand2[0]==0){
+				pairForHand2[0]=sortedValueArrayForHand2[i];
+			}
+			else{
+				pairForHand2[1]=sortedValueArrayForHand2[i];
+			}
+			//remove this pair from the copy
+			sortedValueArrayForHand2Copy.splice(i,1);
+			sortedValueArrayForHand2Copy.splice(i,1);
+		}
+	}
+	if((pairsForHand1[0]>pairsForHand2[0] && pairsForHand1[0]>pairsForHand2[1]) || (pairsForHand1[1]>pairsForHand2[0] && pairsForHand1[1]>pairsForHand2[1])){
+		return 1;
+	}
+	else if((pairsForHand2[0]>pairsForHand1[0] && pairsForHand2[0]>pairsForHand1[1]) || (pairsForHand2[1]>pairsForHand1[0] && pairsForHand2[1]>pairsForHand1[1])){
+		return -1;
+	}
+	else{
+		return tieBreakerHighCard(sortedValueArrayForHand1Copy, sortedValueArrayForHand2Copy);
+	}
+
+
+}
 function printPokerHandName(handValue){
 
 	var output=""
@@ -547,7 +595,7 @@ function tieBreaker(hand1, hand2, handValue){ //return 1 if hand1 wins, return -
 		//this would basically be same as looking for high card.
 	}
 	if(handValue==4){ //two pair, highest pair compare, lower pair, kicker compare
-		
+		return tieBreakerTwoaPair(sortedValueArrayForHand1, sortedValueArrayForHand2);	
 	}
 	if(handValue==3){ //three of a kind, compare three, then highest of remainder 2, then lowest of reminader 2
 	
