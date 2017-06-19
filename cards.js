@@ -495,6 +495,21 @@ function tieBreakerTwoPair(sortedValueArrayForHand1, sortedValueArrayForHand2){
 		return tieBreakerHighCard(sortedValueArrayForHand1Copy, sortedValueArrayForHand2Copy);
 	}
 
+function tieBreakerStraight(sortedValueArrayForHand1, sortedValueArrayForHand2){
+	var sortedValueArrayForHand1Copy=sortedValueArrayForHand1.slice();
+	var sortedValueArrayForHand2Copy=sortedValueArrayForHand2.slice();
+
+	return tieBreakerHighCard(sortedValueArrayForHand1Copy, sortedValueArrayForHand2Copy);
+
+}
+
+function tieBreakerFlush(sortedValueArrayForHand1, sortedValueArrayForHand2){
+	var sortedValueArrayForHand1Copy=sortedValueArrayForHand1.slice();
+	var sortedValueArrayForHand2Copy=sortedValueArrayForHand2.slice();
+
+	return tieBreakerHighCard(sortedValueArrayForHand1Copy, sortedValueArrayForHand2Copy);
+
+}
 
 }
 function printPokerHandName(handValue){
@@ -589,10 +604,10 @@ function tieBreaker(hand1, hand2, handValue){ //return 1 if hand1 wins, return -
 
 	}
 	if(handValue==6){ //flush, highest card wins, if equal, compare the next highest card.. and so on
-		
+		return tieBreakerFlush(sortedValueArrayForHand1, sortedValueArrayForHand2);
 	}
 	if(handValue==5){ //straight, compare highest card
-		//this would basically be same as looking for high card.
+		return tieBreakerStraight(sortedValueArrayForHand1, sortedValueArrayForHand2);	
 	}
 	if(handValue==4){ //two pair, highest pair compare, lower pair, kicker compare
 		return tieBreakerTwoaPair(sortedValueArrayForHand1, sortedValueArrayForHand2);	
