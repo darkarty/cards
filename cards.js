@@ -511,6 +511,62 @@ function tieBreakerFlush(sortedValueArrayForHand1, sortedValueArrayForHand2){
 
 }
 
+function tieBreakerFullHouse(sortedValueArrayForHand1, sortedValueArrayForHand2){
+	return tieBreakerThreeOfAKind(sortedValueArrayForHand1, sortedValueArrayForHand2);
+}
+
+function tieBreakerFourOfAKind(sortedValueArrayForHand1, sortedValueArrayForHand2){
+	//compare first and last from sorted Array
+	var fourHand1;
+	var singleHand1;
+	var fourHand2;
+	var singleHand2
+	if(sortedValueArrayForHand1[0]==sortedValueArrayForHand1[1]){
+		fourHand1=sortedValueArrayForHand1[0];
+		singleHand1=sortedValueArrayForHand1[4];
+	}
+	else{
+		fourHand1=sortedValueArrayForHand1[4];
+		singleHand1=sortedValueArrayForHand1[0];
+	}
+	if(sortedValueArrayForHand2[0]==sortedValueArrayForHand2[1]){
+		fourHand2=sortedValueArrayForHand2[0];
+		singleHand2=sortedValueArrayForHand2[4];
+	}
+	else{
+		fourHand2=sortedValueArrayForHand2[4];
+		singleHand2=sortedValueArrayForHand2[0];
+	}
+
+	if(fourHand1>fourHand2){
+		return 1;
+	}
+	else if(fourHand2>fourHand1){
+		return -1;
+	}
+	else if(singleHand1>singleHand2){
+		return 1
+	}
+	else if(singlehand2>singleHand1){
+		return -1;
+	}
+	else{
+		return 0;
+	}
+}
+
+function tieBreakerStraightFlush(sortedValueArrayForHand1, sortedValueArrayForHand2){
+	if(sortedValueArrayForHand1[4]>sortedValueArrayForHand2[4]){
+		return 1;
+	}
+	else if(sortedValueArrayForHand1[4]<sortedValueArrayForHand2[4]){
+		return -1;
+	}
+	else{
+		return 0;
+	}
+}
+
 }
 function printPokerHandName(handValue){
 
@@ -595,13 +651,13 @@ function tieBreaker(hand1, hand2, handValue){ //return 1 if hand1 wins, return -
 		return 0;
 	}
 	if(handValue==9){ //for straight flush, highest top card wins (A can be used in A-2-3-4-5, but then 5 is the top card) 
-
+		return tieBreakerStraightFlush(sortedValueArrayForHand1, sortedValueArrayForHand2);
 	}
 	if(handValue==8){ //for four of a kind, highest name of the four cards wins, and then kicker
-
+		return tieBreakerFourOfAKind(sortedValueArrayForHand1, sortedValueArrayForHand2);
 	}
 	if(handValue==7){ //for full house, highest name of the three cards wins, if equal, rank of pair decides
-
+		return tieBreakerFullHouse(sortedValueArrayForHand1, sortedValueArrayForHand2);
 	}
 	if(handValue==6){ //flush, highest card wins, if equal, compare the next highest card.. and so on
 		return tieBreakerFlush(sortedValueArrayForHand1, sortedValueArrayForHand2);
